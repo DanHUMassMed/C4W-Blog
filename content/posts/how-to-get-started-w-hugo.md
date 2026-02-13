@@ -1,11 +1,9 @@
 
----
-title: "How to Install and Use Hugo with GitHub Pages and GitHub Actions"
-date: 2026-02-13
-draft: false
-author: "Code for Worcester"
-description: "A complete step-by-step guide to building and deploying a Hugo blog using GitHub Pages and GitHub Actions."
----
++++
+title = "How to Install and Use Hugo with GitHub Pages and GitHub Actions"
+date = 2026-02-13T01:00:00-05:00
+draft = false
++++
 
 -------------------------------------------------------------------------------------------------------------------------
 
