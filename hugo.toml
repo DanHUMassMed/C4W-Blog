@@ -4,7 +4,7 @@ title = 'C4W Blog'
 theme = "hugo-xmag"
 
 [params.banner]
-    src = "/images/C4W-logo.png"
+    src = "images/C4W-logo.png"
     alt = "Code for Worcester"
 
 
