@@ -3,6 +3,8 @@ languageCode = 'en-us'
 title = 'C4W Blog'
 theme = "hugo-xmag"
 
+canonifyURLs = true
+
 [params.banner]
     src = "images/C4W-logo.png"
     alt = "Code for Worcester"
