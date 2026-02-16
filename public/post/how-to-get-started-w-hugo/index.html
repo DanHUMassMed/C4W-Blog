@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>How to Install and Use Hugo with GitHub Pages and GitHub Actions | C4W Blog</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+
+  </head>
+
+  <body class="page">
+    <nav class="header">
+      <div class="banner">
+<a href="/">
+
+<img src="/images/C4W-logo.png" alt="Code for Worcester" />
+</a>
+</div>
+
+      <div class="head-meta">
+      
+        <span><a href="/">Back to Home</a></span>
+        <span class="date">2026-02-13</span>
+        
+        
+        
+          
+        
+        
+        
+        
+      
+      </div>
+    </nav>
+
+<div class="container">
+<article>
+<div class="article-meta">
+
+  <div class="categories">
+  
+    <a href="/categories/data">Data</a>
+  
+     &hercon; <a href="/categories/civic-tech">Civic Tech</a>
+  
+  </div>
+
+  <h1><span class="title">How to Install and Use Hugo with GitHub Pages and GitHub Actions</span></h1>
+
+  
+
+  
+  <p>Tags: <a href="/tags/zoning">zoning</a>; <a href="/tags/gis">gis</a>; <a href="/tags/housing">housing</a>
+  </p>
+  
+  
+
+</div>
+
+
+
+<main>
+<hr>
+<h1 id="how-to-install-and-use-hugo-with-github-pages-and-github-actions">How to Install and Use Hugo with GitHub Pages and GitHub Actions</h1>
+<p>Hugo is one of the fastest and most flexible static site generators available. Combined with GitHub Pages and GitHub Actions, it provides a free, automated, and professional publishing platform for technical and civic blogging.</p>
+<p>This guide walks through the full process of setting up a Hugo site, deploying it with GitHub Actions, and maintaining it long-term.</p>
+<hr>
+<h2 id="why-use-hugo--github-pages">Why Use Hugo + GitHub Pages?</h2>
+<ul>
+<li>⚡ Extremely fast site generation</li>
+<li>💸 Free hosting via GitHub Pages</li>
+<li>🔁 Automatic deployment on every push</li>
+<li>📝 Content managed like source code</li>
+<li>🔓 Fully open-source toolchain</li>
+<li>📱 Mobile-friendly and theme-driven</li>
+</ul>
+<p>This workflow is ideal for civic tech groups, open-data projects, and technical blogs.</p>
+<hr>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before starting, install Hugo and ensure you have Git and GitHub access.</p>
+<h3 id="install-hugo">Install Hugo</h3>
+<h4 id="macos">macOS</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew install hugo
+</span></span></code></pre></div><h4 id="windows">Windows</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>choco install hugo-extended
+</span></span></code></pre></div><h4 id="linux-recommended-manual-install">Linux (Recommended: Manual Install)</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install hugo
+</span></span></code></pre></div><blockquote>
+<p>Note: Linux package managers often ship outdated versions. For modern themes like PaperMod, you may need to download a newer release from:
+<a href="https://github.com/gohugoio/hugo/releases">https://github.com/gohugoio/hugo/releases</a></p>
+</blockquote>
+<p>Verify installation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo version
+</span></span></code></pre></div><hr>
+<h2 id="step-1-create-a-new-hugo-site">Step 1: Create a New Hugo Site</h2>
+<p>Create your project locally:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site my-civic-blog
+</span></span><span style="display:flex;"><span>cd my-civic-blog
+</span></span><span style="display:flex;"><span>git init
+</span></span></code></pre></div><p>This creates the basic Hugo directory structure.</p>
+<hr>
+<h2 id="step-2-add-the-papermod-theme">Step 2: Add the PaperMod Theme</h2>
+<p>PaperMod is a fast, modern theme suitable for technical blogging.</p>
+<p>Add it as a Git submodule:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule add --depth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+</span></span></code></pre></div><p>Configure Hugo to use it.</p>
+<p>Open <code>hugo.toml</code> or <code>config.toml</code> and add:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">theme</span> = <span style="color:#e6db74">&#34;PaperMod&#34;</span>
+</span></span></code></pre></div><hr>
+<h2 id="step-3-create-your-first-post">Step 3: Create Your First Post</h2>
+<p>Create a new post:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new posts/my-first-article.md
+</span></span></code></pre></div><p>Open the file in <code>content/posts/</code>.</p>
+<p>You will see front matter like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">+++</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">date</span> = <span style="color:#e6db74">&#39;2026-02-13T10:21:08-05:00&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">draft</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#39;How to Get Started with Hugo&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">+++</span>
+</span></span></code></pre></div><h3 id="important-publish-your-post">Important: Publish Your Post</h3>
+<p>For production, drafts are NOT published.</p>
+<p>Change:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">draft</span> = <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><p>To:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">draft</span> = <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><p>Or remove it entirely.</p>
+<p>If you forget this, your post will not appear on GitHub Pages.</p>
+<hr>
+<h2 id="step-4-preview-your-site-locally">Step 4: Preview Your Site Locally</h2>
+<p>Run the development server:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server -D
+</span></span></code></pre></div><p>Open:</p>
+<pre tabindex="0"><code>http://localhost:1313
+</code></pre><p>The <code>-D</code> flag shows draft posts locally.</p>
+<hr>
+<h2 id="step-5-push-your-site-to-github">Step 5: Push Your Site to GitHub</h2>
+<p>Create a new repository on GitHub:</p>
+<ul>
+<li>Name: <code>my-hugo-site</code> (or similar)</li>
+<li>Do NOT initialize with README</li>
+</ul>
+<p>Then connect and push:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;Initial Hugo site&#34;</span>
+</span></span><span style="display:flex;"><span>git branch -M main
+</span></span><span style="display:flex;"><span>git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+</span></span><span style="display:flex;"><span>git push -u origin main
+</span></span></code></pre></div><hr>
+<h2 id="step-6-set-up-github-actions-deployment">Step 6: Set Up GitHub Actions Deployment</h2>
+<p>GitHub Actions will build and deploy your site automatically.</p>
+<h3 id="create-workflow-folder">Create Workflow Folder</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir -p .github/workflows
+</span></span></code></pre></div><p>Create:</p>
+<pre tabindex="0"><code>.github/workflows/hugo.yml
+</code></pre><hr>
+<h3 id="add-deployment-workflow">Add Deployment Workflow</h3>
+<p>Paste the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Deploy Hugo site to Pages</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">push</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">branches</span>: [<span style="color:#ae81ff">main]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">workflow_dispatch</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">permissions</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">contents</span>: <span style="color:#ae81ff">read</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">pages</span>: <span style="color:#ae81ff">write</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">id-token</span>: <span style="color:#ae81ff">write</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">concurrency</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">group</span>: <span style="color:#e6db74">&#34;pages&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cancel-in-progress</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">defaults</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">run</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">shell</span>: <span style="color:#ae81ff">bash</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">build</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">HUGO_VERSION</span>: <span style="color:#ae81ff">0.155.3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Install Hugo</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          wget -O ${{ runner.temp }}/hugo.deb \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          sudo dpkg -i ${{ runner.temp }}/hugo.deb</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Install Dart Sass</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: <span style="color:#ae81ff">sudo snap install dart-sass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Checkout</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v4</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">submodules</span>: <span style="color:#ae81ff">recursive</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Setup Pages</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">id</span>: <span style="color:#ae81ff">pages</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/configure-pages@v5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Build Site</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">HUGO_ENVIRONMENT</span>: <span style="color:#ae81ff">production</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          hugo --minify \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">               --baseURL &#34;${{ steps.pages.outputs.base_url }}/&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Upload Artifact</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/upload-pages-artifact@v3</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#ae81ff">./public</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">deploy</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">needs</span>: <span style="color:#ae81ff">build</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">github-pages</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">url</span>: <span style="color:#ae81ff">${{ steps.deployment.outputs.page_url }}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Deploy</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">id</span>: <span style="color:#ae81ff">deployment</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/deploy-pages@v4</span>
+</span></span></code></pre></div><hr>
+<h3 id="important-hugo-version">Important: Hugo Version</h3>
+<p>Many themes require newer Hugo.</p>
+<p>This line is critical:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">HUGO_VERSION</span>: <span style="color:#ae81ff">0.155.3</span>
+</span></span></code></pre></div><p>If your build fails, check your theme’s minimum version.</p>
+<hr>
+<h2 id="step-7-enable-github-pages">Step 7: Enable GitHub Pages</h2>
+<p>In your repository:</p>
+<ol>
+<li>Go to <strong>Settings → Pages</strong></li>
+<li>Under <strong>Source</strong>, select:
+<strong>GitHub Actions</strong></li>
+<li>Save</li>
+</ol>
+<p>GitHub will now use your workflow.</p>
+<hr>
+<h2 id="step-8-publishing-workflow">Step 8: Publishing Workflow</h2>
+<p>From now on, your workflow is:</p>
+<h3 id="1-write">1. Write</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new posts/new-post.md
+</span></span></code></pre></div><p>Edit and set:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">draft</span> = <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><hr>
+<h3 id="2-commit">2. Commit</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;Add new post&#34;</span>
+</span></span></code></pre></div><hr>
+<h3 id="3-deploy">3. Deploy</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git push origin main
+</span></span></code></pre></div><p>Within ~30 seconds, your site updates automatically.</p>
+<hr>
+<h2 id="common-problems-and-fixes">Common Problems and Fixes</h2>
+<h3 id="post-not-showing-up">Post Not Showing Up</h3>
+<p>Check:</p>
+<ul>
+<li><code>draft = false</code></li>
+<li>Date is not in the future</li>
+<li>File is in <code>content/posts/</code></li>
+</ul>
+<hr>
+<h3 id="hugo-version-errors">Hugo Version Errors</h3>
+<p>Error example:</p>
+<pre tabindex="0"><code>Hugo v0.146+ required
+</code></pre><p>Fix:</p>
+<p>Update <code>HUGO_VERSION</code> in workflow.</p>
+<hr>
+<h3 id="theme-not-loading">Theme Not Loading</h3>
+<p>Run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule update --init --recursive
+</span></span></code></pre></div><p>Then commit.</p>
+<hr>
+<h3 id="build-fails-in-ci-only">Build Fails in CI Only</h3>
+<p>Run locally:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo --verbose
+</span></span></code></pre></div><p>Compare output.</p>
+<hr>
+<h2 id="using-data-with-hugo-civic-tech-tip">Using Data with Hugo (Civic Tech Tip)</h2>
+<p>Hugo supports structured data.</p>
+<p>Place files in:</p>
+<pre tabindex="0"><code>/data/
+</code></pre><p>Example:</p>
+<pre tabindex="0"><code>data/businesses.json
+data/permits.csv
+</code></pre><p>You can then render them in templates to build:</p>
+<ul>
+<li>Tables</li>
+<li>Dashboards</li>
+<li>Reports</li>
+</ul>
+<p>This is ideal for civic data storytelling.</p>
+<hr>
+<h2 id="optional-custom-domain">Optional: Custom Domain</h2>
+<p>You can attach a domain like:</p>
+<pre tabindex="0"><code>blog.codeforworcester.org
+</code></pre><p>In:</p>
+<p>Settings → Pages → Custom Domain</p>
+<p>GitHub provides free HTTPS.</p>
+<hr>
+<h2 id="recommended-repository-structure">Recommended Repository Structure</h2>
+<pre tabindex="0"><code>my-civic-blog/
+├── content/
+│   └── posts/
+├── themes/
+│   └── PaperMod/
+├── static/
+├── data/
+├── hugo.toml
+└── .github/workflows/hugo.yml
+</code></pre><hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>By combining Hugo, GitHub Pages, and GitHub Actions, you get:</p>
+<ul>
+<li>Professional publishing</li>
+<li>Zero hosting cost</li>
+<li>Automated deployment</li>
+<li>Version-controlled content</li>
+<li>Long-term stability</li>
+</ul>
+<p>This setup is well suited for civic organizations, open data projects, and technical communities that value transparency and sustainability.</p>
+<p>Once configured, it requires minimal maintenance and scales effortlessly.</p>
+<p>Happy publishing. 🚀</p>
+<hr>
+
+</main>
+
+
+
+
+
+<nav class="post-nav">
+  <span class="nav-prev"></span>
+  <span class="nav-next"></span>
+</nav>
+
+
+
+</article>
+</div>
+
+<script async src="//yihui.org/js/center-img.js"></script>
+
+<footer>
+
+<div class="footer">
+  <ul class="menu">
+    
+    <li><a href="/"><span data-hover="Home">Home</span></a></li>
+    
+    <li><a href="/categories/"><span data-hover="Categories">Categories</span></a></li>
+    
+    <li><a href="/tags/"><span data-hover="Tags">Tags</span></a></li>
+    
+    <li><a href="/post/"><span data-hover="Blog">Blog</span></a></li>
+    
+  </ul>
+  
+</div>
+</footer>
+
+
+<script src="//yihui.org/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script>
+hljs.configure({languages: []});
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</body>
+</html>
+

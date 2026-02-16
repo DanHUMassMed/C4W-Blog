@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>C4W Blog</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on C4W Blog</description>
+    <title>Posts on C4W Blog</title>
+    <link>http://localhost:1313/post/</link>
+    <description>Recent content in Posts on C4W Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 13 Feb 2026 01:00:00 -0500</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to Install and Use Hugo with GitHub Pages and GitHub Actions</title>
       <link>http://localhost:1313/post/how-to-get-started-w-hugo/</link>

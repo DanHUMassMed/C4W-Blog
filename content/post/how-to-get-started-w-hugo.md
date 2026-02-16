@@ -3,6 +3,10 @@
 title = "How to Install and Use Hugo with GitHub Pages and GitHub Actions"
 date = 2026-02-13T01:00:00-05:00
 draft = false
+
+categories = ["Data", "Civic Tech"]
+tags = ["zoning", "gis", "housing"]
+
 +++
 
 -------------------------------------------------------------------------------------------------------------------------
